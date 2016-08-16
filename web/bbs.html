@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <title>Hoge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content='noydir' name='robots'>
+    <meta content='noodp' name='robots'>
+
+    <script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+    <script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+    <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div align="center">
+      <h1>簡易掲示板</h1>
+    </div>
+    <div id="app" />
+
+    <script type="text/babel">
+      var PostForm = React.createClass({
+        render: function() {
+          return (
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <h4>投稿</h4>
+              </div>
+              <div className="panel-body">
+                <form onSubmit={this.props.handleSubmit}>
+                  <div className="form-group">
+                    <label htmlfor="userName">ユーザ名</label>
+                    <input type="text" name="userName" value={this.props.userName}
+                      onChange={this.props.changeUserName}
+                      className="form-control"
+                      placeholder="ユーザ名を入力してください" />
+                  </div>
+                  <div className="form-group">
+                    <label htmlfor="message">メッセージ</label>
+                    <textarea name="message" className="form-control" rows="3"
+                      onChange={this.props.changeMessage} placeholder="メッセージを入力してください">
+                      {this.props.message}
+                    </textarea>
+                  </div>
+                  <button type="submit" className="btn btn-default">投稿する</button>
+                </form>
+              </div>
+            </div>
+          );
+        }
+      });
+
+      var Articles = React.createClass({
+        render: function() {
+          var articles = [];
+          for(var i = 0, len = this.props.articleDatas.length; i < len; i++){
+            articles.push(
+              <div className="panel panel-default">
+                <div className="panel-body">
+                  <label>ユーザ名: </label>
+                  {this.props.articleDatas[i].userName}<br/>
+                  <label>メッセージ: </label>
+                  {this.props.articleDatas[i].message}
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <div>
+              {articles}
+            </div>
+          );
+        }
+      });
+
+      var App = React.createClass({
+        getInitialState: function() {
+          return {
+            userName: "",
+            message: "",
+            articleDatas: []
+          };
+        },
+
+        componentWillMount: function() {
+          // TODO: ajaxでlambda呼んで全リストを取ってくる
+          // var self = this;
+          // $.ajax({
+          //   url: "https://example.com/bbs/articles",
+          //   dataType: "json",
+          //   type: "get",
+          //   data: {}
+          // }).done(function(data) {
+          //   self.state.articleDatas.push({
+          //     userName: data.userName,
+          //     message: data.message
+          //   });
+          // });
+        },
+
+        handleSubmit: function(e) {
+          e.preventDefault();
+
+          // TODO: ajaxでlambda呼んで投稿内容をPOSTする
+          // var self = this;
+          // $.ajax({
+          //   url: "https://example.com/bbs/articles",
+          //   dataType: "json",
+          //   type: "post",
+          //   data: {
+          //     user_name: self.state.userName,
+          //     message: self.state.message
+          //   }
+          // }).done(function(data) {
+          //   self.setState(function(state) {
+          //     return {
+          //       articleDatas: state.articleDatas.concat(
+          //         {
+          //           userName: self.state.userName,
+          //           message: self.state.message
+          //         }
+          //       )
+          //     }
+          //   });
+          // });
+
+          this.setState(function(state) {
+            return {
+              articleDatas: state.articleDatas.concat(
+                {
+                  userName: this.state.userName,
+                  message: this.state.message
+                }
+              )
+            }
+          });
+        },
+
+        changeUserName: function(e) {
+          this.setState({
+            userName: e.target.value
+          });
+        },
+
+        changeMessage: function(e) {
+          this.setState({
+            message: e.target.value
+          });
+        },
+
+        render: function() {
+          return (
+            <div className="container">
+              <PostForm
+                userName={this.state.userName}
+                message={this.state.message}
+                handleSubmit={this.handleSubmit}
+                changeUserName={this.changeUserName}
+                changeMessage={this.changeMessage}
+              />
+              <Articles articleDatas={this.state.articleDatas}/>
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <App />,
+        document.getElementById('app')
+      );
+    </script>
+  </body>
+</html>
