@@ -57,4 +57,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# virtualenv
+.direnv/
 
+# env
+.envrc
