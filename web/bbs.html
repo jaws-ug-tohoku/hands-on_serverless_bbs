@@ -78,6 +78,8 @@
         }
       });
 
+      const ENDPOINT = "https://xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com";
+
       var App = React.createClass({
         getInitialState: function() {
           return {
@@ -88,56 +90,52 @@
         },
 
         componentWillMount: function() {
-          // TODO: ajaxでlambda呼んで全リストを取ってくる
-          // var self = this;
-          // $.ajax({
-          //   url: "https://example.com/bbs/articles",
-          //   dataType: "json",
-          //   type: "get",
-          //   data: {}
-          // }).done(function(data) {
-          //   self.state.articleDatas.push({
-          //     userName: data.userName,
-          //     message: data.message
-          //   });
-          // });
+          var self = this;
+          $.ajax({
+            url: ENDPOINT + "/bbs/articles",
+            dataType: "json",
+            type: "get",
+            data: {}
+          }).done(function(data) {
+            var articleDatas = [];
+            for (var i = 0; i < data.Count; i++) {
+              var item = data.Items[i];
+              articleDatas.push({
+                userName: item.username,
+                message: item.message
+              });
+            }
+
+            self.setState({
+              articleDatas: articleDatas
+            });
+          });
         },
 
         handleSubmit: function(e) {
           e.preventDefault();
 
-          // TODO: ajaxでlambda呼んで投稿内容をPOSTする
-          // var self = this;
-          // $.ajax({
-          //   url: "https://example.com/bbs/articles",
-          //   dataType: "json",
-          //   type: "post",
-          //   data: {
-          //     user_name: self.state.userName,
-          //     message: self.state.message
-          //   }
-          // }).done(function(data) {
-          //   self.setState(function(state) {
-          //     return {
-          //       articleDatas: state.articleDatas.concat(
-          //         {
-          //           userName: self.state.userName,
-          //           message: self.state.message
-          //         }
-          //       )
-          //     }
-          //   });
-          // });
-
-          this.setState(function(state) {
-            return {
-              articleDatas: state.articleDatas.concat(
-                {
-                  userName: this.state.userName,
-                  message: this.state.message
-                }
-              )
-            }
+          var self = this;
+          $.ajax({
+            url: ENDPOINT + "/bbs/articles",
+            dataType: "json",
+            contentType: "application/json",
+            type: "post",
+            data: JSON.stringify({
+              username: self.state.userName,
+              message: self.state.message
+            })
+          }).done(function(data) {
+            self.setState(function(state) {
+              return {
+                articleDatas: state.articleDatas.concat(
+                  {
+                    userName: self.state.userName,
+                    message: self.state.message
+                  }
+                )
+              }
+            });
           });
         },
 
@@ -163,6 +161,7 @@
                 changeUserName={this.changeUserName}
                 changeMessage={this.changeMessage}
               />
+              <hr />
               <Articles articleDatas={this.state.articleDatas}/>
             </div>
           );
@@ -171,7 +170,7 @@
 
       ReactDOM.render(
         <App />,
-        document.getElementById('app')
+        document.getElementById("app")
       );
     </script>
   </body>
