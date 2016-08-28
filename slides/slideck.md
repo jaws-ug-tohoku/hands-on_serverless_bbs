@@ -61,6 +61,20 @@ API Gateway + Lambda + DynamoDBで掲示板を作ろう
 ## 題材ダウンロード
 - - -
 
+以下のURLよりダウンロードし、
+
+zipファイルを解答してください
+
+https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs/archive/master.zip
+
+<br/>
+
+gitを利用している方は以下のコマンドでも可能です
+
+```
+$ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
+```
+
 ---
 
 ## Dynamo DBの設定
