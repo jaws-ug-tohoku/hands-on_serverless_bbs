@@ -1,0 +1,13 @@
+profile: null
+region: ap-northeast-1
+versioning: false
+default_alias: null
+clean_build: false
+configuration:
+  name: serverless_bbs_get
+  runtime: python2.7
+  role: arn:aws:iam::561661130956:role/lambda_execute_with_dynamodb
+  handler: lambda_function.lambda_handler_get
+  description: serverless_bbs_get
+  timeout: 10
+  memory_size: 512
