@@ -127,7 +127,7 @@ $ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
 
 メリット
 
-- パフォーマンスが良い
+- パフォーマンスが良い (仮想DOMという仕組み)
   - リアルなDOMはなぜ遅いのか (http://steps.dodgson.org/b/2014/12/11/why-is-real-dom-slow/)
 - ある程度のルールを強制されるので、メンテナンス性も期待できる
 
@@ -197,7 +197,7 @@ Line:88
 
 web/bbs.htmlをお好みのWebブラウザ(Google Chrome, Internet Exproler etc)で開く
 
-![bbs](slides/images/bbs_1.png)
+![bbs](images/bbs_1.png)
 
 ---
 
@@ -206,7 +206,7 @@ web/bbs.htmlをお好みのWebブラウザ(Google Chrome, Internet Exproler etc)
 
 ユーザ名、メッセージを入力して投稿してみましょう
 
-![bbs](slides/images/bbs_2.png)
+![bbs](images/bbs_2.png)
 
 ---
 
