@@ -20,6 +20,11 @@ JAWSUG青森 (石澤・福井)
 ## 自己紹介(石澤)
 - - -
 
+- 石澤 直人 (Naoto Ishizawa)
+- Engineer @ Heptagon inc. (since 2013. 11 ~)
+- Born in 弘前. Living in 仙台.
+- http://blog.youyo.info/
+
 ---
 
 
