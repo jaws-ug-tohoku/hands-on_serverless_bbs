@@ -1,0 +1,30 @@
+// GET
+
+Content-Type: application/json
+
+{
+    "httpMethod": "$context.httpMethod"
+}
+
+---
+
+application/json
+
+$util.parseJson($input.json('$'))
+
+
+
+
+// Post
+
+{
+    "httpMethod": "$context.httpMethod",
+    "username": $input.json('username'),
+    "message": $input.json('message')
+}
+
+---
+
+application/json
+
+$util.parseJson($input.json('$'))

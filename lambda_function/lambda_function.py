@@ -37,13 +37,14 @@ class Bbs:
         return json.dumps(res)
 
 
-def lambda_handler_get(event, context):
-    bbs = Bbs()
-    res = bbs.read_all()
-    return res
-
-
-def lambda_handler_post(event, context):
-    bbs = Bbs()
-    res = bbs.write(event['username'], event['message'])
-    return res
+def lambda_handler(event, context):
+    if event['httpMethod'] == 'GET':
+        bbs = Bbs()
+        res = bbs.read_all()
+        return res
+    elif event['httpMethod'] == 'POST':
+        bbs = Bbs()
+        res = bbs.write(event['username'], event['message'])
+        return res
+    else:
+        return 'ng'

@@ -20,6 +20,11 @@ JAWSUG青森 (石澤・福井)
 ## 自己紹介(石澤)
 - - -
 
+- 石澤 直人 (Naoto Ishizawa)
+- Engineer @ Heptagon inc. (since 2013. 11 ~)
+- Born in 弘前. Living in 仙台.
+- http://blog.youyo.info/
+
 ---
 
 
@@ -84,21 +89,294 @@ $ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
 ## Dynamo DBの設定
 - - -
 
-石澤san担当でOK?
+---
+
+## Dynamo DBとは
+- - -
+
+- AWSが提供するNoSQLのフルマネージドサービス
+- スキーマレスなので事前のスキーマ設定が不要
+- データベース容量は使用量に応じて自動的に拡張
+- 秒間あたりのread/writeスループットを設定
+
+---
+
+## Dynamo DBを選択する
+- - -
+
+![dynamodb](images/dynamodb1.png)
+
+---
+
+## テーブルを作成する
+- - -
+
+![dynamodb](images/dynamodb2.png)
+
+---
+
+## テーブルを作成する
+- - -
+テーブル名、パーティションキーを設定し作成
+
+![dynamodb](images/dynamodb3.png)
+
+---
+
+## AWS Lambdaの設定
+- - -
+
+---
+
+## AWS Lambdaとは
+- - -
+
+- サーバーのプロビジョニングや管理なしでコードを実行できる
+- コードの実行時間に対して料金が発生
+- リクエスト数に応じて自動でスケール
+- DynamoDBやAPI-Gatewayなど別のサービスと連携し、特定のイベントをトリガーとして実行可能
+
+---
+
+## AWS Lambdaの設定
+- - -
+
+![](images/lambda1.png)
+
+---
+
+## AWS Lambdaの設定
+- - -
+
+![](images/lambda2.png)
+
+---
+
+## 雛形をskip
+- - -
+
+![](images/lambda3.png)
+
+---
+
+## Lambda実行のトリガー設定
+- - -
+
+![](images/lambda4.png)
+
+---
+
+## AWS Lambdaの設定
+- - -
+
+`Name` を入力し、 `Runtime` で `python2.7` を選択する
+
+![](images/lambda5.png)
+
+---
+
+## AWS Lambdaの設定
+- - -
+
+`lambda_function/lambda_function.py` ファイルの中身をコピペする
+
+![](images/lambda6.png)
+
+---
+
+## AWS Lambdaの設定
+- - -
+
+`create a custom role` を選択し、IAMロールを作成する
+
+![](images/lambda7.png)
+
+---
+
+## IAMロールとは
+- - -
+
+- AWSへのアクセスを安全に制御するための仕組み
+- IAMユーザーとIAMロールがある
+- 誰がAWS リソースを使用できるか（認証）
+- どのリソースをどのような方法で使用できるか（承認）
+
+---
+
+## IAMロールの設定
+- - -
+
+`lambda_basic_execution_with_dynamodb` というロール名を入力、ポリシードキュメントに `policy.txt` ファイルの内容をコピペする
+
+![](images/lambda8.png)
+
+---
+
+## AWS Lambdaの設定
+- - -
+
+`Timeout` の値を10secにする
+
+![](images/lambda9.png)
+
+---
+
+## 確認画面
+- - -
+
+![](images/lambda10.png)
 
 ---
 
 ## API Gatewayの設定
 - - -
 
-石澤san担当でOK?
+---
+
+## API Gatewayとは
+- - -
+
+- AWS Lambdaや別のAWSのサービスに対してRESR-APIのインターフェイスを提供
+- 別のWebアプリケーションへのHTTP-Proxy機能
+- 認証機能
 
 ---
 
-## Lambdaの設定
+## API Gatewayの設定
 - - -
 
-石澤san担当でOK?
+![](images/apigateway1.png)
+
+---
+
+## 新しいAPIの作成
+- - -
+
+![](images/apigateway2.png)
+
+---
+
+## リソースの作成
+- - -
+
+![](images/apigateway3.png)
+
+---
+
+## リソースの作成
+- - -
+リソース名/リソースパスに'articles'と入力する
+
+![](images/apigateway4.png)
+
+---
+
+## メソッドの作成
+- - -
+
+![](images/apigateway5.png)
+
+---
+
+## メソッドの作成
+- - -
+
+![](images/apigateway6.png)
+
+---
+
+## メソッドの作成
+- - -
+
+![](images/apigateway7.png)
+
+---
+
+## メソッドの設定
+- - -
+
+![](images/apigateway8.png)
+
+---
+
+## メソッドの設定
+- - -
+
+![](images/apigateway9.png)
+
+---
+
+## メソッドの設定
+- - -
+
+```
+{
+  "httpMethod": "$context.httpMethod",
+  "username": $input.json('username'),
+  "message": $input.json('message')
+}
+```
+
+---
+
+## メソッドの設定
+- - -
+
+![](images/apigateway10.png)
+
+---
+
+## メソッドの設定
+- - -
+
+![](images/apigateway11.png)
+
+---
+
+## メソッドの設定
+- - -
+
+```
+$util.parseJson($input.json('$'))
+```
+
+---
+
+## メソッドの作成
+- - -
+
+同様の手順でGETメソッドも実装する  
+統合リクエストのマッピングテンプレートは下記のように設定する  
+統合レスポンスはPOSTと同様に設定
+
+```
+{
+  "httpMethod": "$context.httpMethod"
+}
+```
+
+---
+
+## CORSの設定
+- - -
+
+![](images/apigateway12.png)
+
+---
+
+## APIのデプロイ
+- - -
+
+![](images/apigateway13.png)
+
+---
+
+## APIのデプロイ
+- - -
+
+表示されるURLをメモしておく
+
+![](images/apigateway14.png)
 
 ---
 
