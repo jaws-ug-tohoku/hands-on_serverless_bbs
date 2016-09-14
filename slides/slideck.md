@@ -2,22 +2,18 @@
 
 JAWSUG青森 (石澤・福井)
 
-2016/09/xｘ
+2016/09/15
+
+---
+
+## 自己紹介
+- - -
 
 ---
 
 
 
 ## 自己紹介
-- - -
-
-さくっと
-
----
-
-
-
-## 自己紹介(石澤)
 - - -
 
 - 石澤 直人 (Naoto Ishizawa)
@@ -27,9 +23,7 @@ JAWSUG青森 (石澤・福井)
 
 ---
 
-
-
-## 自己紹介(福井)
+## 自己紹介
 - - -
 
 - 福井 烈 (Takeshi Fukui)
@@ -84,7 +78,9 @@ Serverlessな掲示板を作ろう
 
 zipファイルを解凍してください
 
-https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs/archive/master.zip
+https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs/archive/master.zip  
+  
+https://goo.gl/5Ok2Fs (Githubページへの短縮URL)
 
 <br/>
 
@@ -107,7 +103,7 @@ $ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
 - AWSが提供するNoSQLのフルマネージドサービス
 - スキーマレスなので事前のスキーマ設定が不要
 - データベース容量は使用量に応じて自動的に拡張
-- 秒間あたりのread/writeスループットを設定
+- 秒間あたりのread/writeスループットを設定可能
 
 ---
 
@@ -127,7 +123,8 @@ $ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
 
 ## テーブルを作成する
 - - -
-テーブル名、パーティションキーを設定し作成
+テーブル名、パーティションキーを設定し作成  
+テーブル名は他の人と被らないようにユニークなものを設定
 
 ![dynamodb](images/dynamodb3.png)
 
@@ -188,9 +185,28 @@ $ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
 ## AWS Lambdaの設定
 - - -
 
-`lambda_function/lambda_function.py` ファイルの中身をコピペする
+`lambda_function/lambda_function.py` ファイルの中身を一部変更しつつコピペする
 
 ![](images/lambda6.png)
+
+---
+
+## AWS Lambdaの設定
+- - -
+
+`table_name` を自分で作成したDyanmoDBのテーブル名に変更
+
+```
+# -*- coding: utf-8 -*-
+
+table_name = 'serverless_bbs'
+
+import uuid
+import boto3
+.
+.
+.
+```
 
 ---
 
@@ -222,6 +238,51 @@ $ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
 
 ---
 
+## IAMロールの設定
+- - -
+
+`lambda_basic_execution_with_dynamodb` というロール名を入力、ポリシードキュメントに `policy.txt` ファイルの内容をコピペする
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1473745720000",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeStream",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:ListStreams",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:ap-northeast-1:*:table/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:*:*:*"
+    }
+  ]
+}
+```
+
+---
+
 ## AWS Lambdaの設定
 - - -
 
@@ -246,7 +307,7 @@ $ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
 ## API Gatewayとは
 - - -
 
-- AWS Lambdaや別のAWSのサービスに対してRESR-APIのインターフェイスを提供
+- AWS Lambdaや別のAWSのサービスに対してREST-APIのインターフェイスを提供
 - 別のWebアプリケーションへのHTTP-Proxy機能
 - 認証機能
 
@@ -261,6 +322,8 @@ $ git clone https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs.git
 
 ## 新しいAPIの作成
 - - -
+
+API名はユニークなものを設定
 
 ![](images/apigateway2.png)
 
@@ -384,7 +447,8 @@ $util.parseJson($input.json('$'))
 ## APIのデプロイ
 - - -
 
-表示されるURLをメモしておく
+表示されるURLをメモしておく  
+(末尾の `/bbs` は不要)
 
 ![](images/apigateway14.png)
 
