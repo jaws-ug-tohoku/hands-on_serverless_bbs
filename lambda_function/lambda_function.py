@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+table_name = 'serverless_bbs'
+
 import uuid
 import boto3
 import json
@@ -9,7 +11,7 @@ from boto3.dynamodb.conditions import Key
 class Bbs:
     def __init__(self):
         dynamodb = boto3.resource('dynamodb')
-        self.table = dynamodb.Table('serverless_bbs')
+        self.table = dynamodb.Table(table_name)
 
     def write(self, username, message):
         res = self.table.put_item(
