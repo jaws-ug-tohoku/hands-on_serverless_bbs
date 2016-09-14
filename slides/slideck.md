@@ -42,8 +42,6 @@ JAWSUG青森 (石澤・福井)
 
 ---
 
-
-
 ## アジェンダ
 - - -
 
@@ -61,9 +59,21 @@ JAWSUG青森 (石澤・福井)
 ## ハンズオン概要
 - - -
 
-API Gateway + Lambda + DynamoDBで掲示板を作ろう
+API Gateway + Lambda + DynamoDBで  
+Serverlessな掲示板を作ろう
 
 (ついでにReact.jsも使っちゃおう)
+
+---
+
+## Serverlessって？
+- - -
+
+- API-Gateway + Lambdaのようなファンクション単位でのコード実行環境が整った
+- 実行されるコードに状態を保存しておけないので、フルマネージドのデータストアを利用
+- フルマネージドサービスを使ったサーバ構築/管理が不要なアーキテクチャが出来上がった
+
+-  **Serverless Architecture**
 
 ---
 
