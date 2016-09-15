@@ -30,7 +30,8 @@ JAWSUG青森 (石澤・福井)
 - Engineer @ Piece of Cake, inc. (since 2015. 3 ~)
   - cakes (https://cakes.mu)
   - note (https://note.mu)
-- リモートワーカー (東京 <=> 青森県大鰐町)
+- Born in 弘前. Living in 大鰐町.
+- リモートワーカー
 - 1児の父
 - http://fukuiretu.com
 
@@ -46,7 +47,7 @@ JAWSUG青森 (石澤・福井)
 1. Lambdaの設定
 1. API Gatewayの設定
 1. Webアプリから接続
-1. Webアプリのカスタマイズ
+1. 演習問題
 
 ---
 
@@ -79,7 +80,7 @@ Serverlessな掲示板を作ろう
 zipファイルを解凍してください
 
 https://github.com/jaws-ug-tohoku/hands-on_serverless_bbs/archive/master.zip  
-  
+
 https://goo.gl/5Ok2Fs (Githubページへの短縮URL)
 
 <br/>
@@ -458,7 +459,15 @@ $util.parseJson($input.json('$'))
 
 ---
 
-## その前に... ちょっとだけReact.jsの説明
+
+
+## DEMO
+
+---
+
+
+
+## ちょっとだけReact.jsの説明
 
 ---
 
@@ -467,9 +476,11 @@ $util.parseJson($input.json('$'))
 ## React.jsとは
 - - -
 - UIのパーツ(コンポーネント)を作るViewのためのライブラリ
-- Facebook製のOSS (https://github.com/facebook/react)
+- Facebook謹製のOSS (https://github.com/facebook/react)
 - もちろんFacebook自身もReact.js製
 - ちなみにcakesとnoteは...
+  - cakes -> jQuery
+  - note -> AngularJS(1系)
 
 ---
 
@@ -528,6 +539,17 @@ var PostForm = React.createClass({
 ```
 ---
 
+
+
+## React.jsのコンポーネント実装例
+- - -
+
+![bbs](images/bbs_1.png)
+
+---
+
+
+
 ## WebアプリからAPIへ接続(1/3)
 - - -
 
@@ -536,8 +558,9 @@ web/bbs.htmlをお使いのエディタ(vim, Atom, サクラエディタ etc)で
 以下の定数(const)をAPI Gatewayで設定したエンドポイントに書き換える
 
 ```
-Line:88
-  const ENDPOINT = "https://xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com";
+// 80行目辺り
+// TODO: 各々の環境に合わせて変更する
+const ENDPOINT = "https://xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com";
 ```
 
 ---
@@ -549,7 +572,7 @@ Line:88
 
 web/bbs.htmlをお好みのWebブラウザ(Google Chrome, Internet Exproler etc)で開く
 
-![bbs](images/bbs_1.png)
+![bbs](images/bbs_2.png)
 
 ---
 
@@ -558,21 +581,20 @@ web/bbs.htmlをお好みのWebブラウザ(Google Chrome, Internet Exproler etc)
 
 ユーザ名、メッセージを入力して投稿してみましょう
 
-![bbs](images/bbs_2.png)
+![bbs](images/bbs_3.png)
 
 ---
 
 
 
-## Webアプリのカスタマイズ
+## 演習問題
 - - -
 
-- 投稿内容の削除機能
-- 投稿内容のソート機能
-- 投稿項目の追加
-
-etc...
+1. 投稿項目に「タイトル」を追加してください
+2. 投稿内容の「削除機能」を追加してください
 
 ---
+
+
 
 # FIN

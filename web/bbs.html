@@ -2,7 +2,7 @@
 <html lang="jp">
   <head>
     <meta charset="utf-8">
-    <title>Hoge</title>
+    <title>Serverlessな掲示板</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta content='noydir' name='robots'>
@@ -18,7 +18,7 @@
   </head>
   <body>
     <div align="center">
-      <h1>簡易掲示板</h1>
+      <h1>Serverlessな掲示板</h1>
     </div>
     <div id="app" />
 
@@ -78,6 +78,7 @@
         }
       });
 
+      // TODO: 各々の環境に合わせて変更する
       const ENDPOINT = "https://xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com";
 
       var App = React.createClass({
@@ -94,7 +95,7 @@
           $.ajax({
             url: ENDPOINT + "/bbs/articles",
             dataType: "json",
-            type: "get",
+            type: "GET",
             data: {}
           }).done(function(data) {
             var articleDatas = [];
@@ -120,7 +121,7 @@
             url: ENDPOINT + "/bbs/articles",
             dataType: "json",
             contentType: "application/json",
-            type: "post",
+            type: "POST",
             data: JSON.stringify({
               username: self.state.userName,
               message: self.state.message
