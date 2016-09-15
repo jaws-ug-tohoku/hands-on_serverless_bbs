@@ -61,6 +61,14 @@ Serverlessな掲示板を作ろう
 
 ---
 
+
+
+## DEMO
+
+---
+
+
+
 ## Serverlessって？
 - - -
 
@@ -456,12 +464,6 @@ $util.parseJson($input.json('$'))
 ---
 
 ## WebアプリからAPIへ接続
-
----
-
-
-
-## DEMO
 
 ---
 
